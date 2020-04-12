@@ -16,47 +16,51 @@ import {
   Select,
   MenuItem,
   FormControl,
-  Collapse
+  Collapse,
 } from "@material-ui/core";
 import moment from "moment";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
   content: {
-    padding: 0
+    padding: 0,
   },
   inner: {
-    minWidth: 1050
+    minWidth: 1050,
   },
   nameContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   actions: {
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   formControl: {
-    minWidth: 120
+    minWidth: 120,
   },
   selectEmpty: {
     // marginTop: theme.spacing(2)
-  }
+  },
 }));
 
-const OrderList = props => {
+const OrderList = (props) => {
   const classes = useStyles();
   const {
     orders,
-    handleChange,
     orderStatus,
     rows,
     page,
     handlePageChange,
-    handleRowsChange
+    handleRowsChange,
+    changeOrderStatus,
   } = props;
+
+  console.log("Orders: ");
+  console.log(orders);
+
   return (
     <Card>
       <CardContent className={classes.content}>
@@ -71,26 +75,31 @@ const OrderList = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders.slice(rows * page, rows + rows * page).map(order => (
-              <TableRow className={classes.tableRow} key={order.id}>
-                <TableCell className>{order.email}</TableCell>
-                <TableCell>{order.products.length}</TableCell>
-                <TableCell>
-                  {moment(order.orderDate).format("DD/MM/YYYY")}
-                </TableCell>
-                <TableCell>
-                  <FormControl className={classes.formControl}>
-                    <Select value={orderStatus} onChange={handleChange}>
-                      <MenuItem value="pending">Pending</MenuItem>
-                      <MenuItem value="ordered">Ordered</MenuItem>
-                      <MenuItem value="shipped">Shipped</MenuItem>
-                      <MenuItem value="completed">Completed</MenuItem>
-                    </Select>
-                  </FormControl>
-                </TableCell>
-                <TableCell>{order.total}</TableCell>
-              </TableRow>
-            ))}
+            {orders.slice(rows * page, rows + rows * page).map((order) => {
+              const handleChange = (event) => {
+                changeOrderStatus(event.target.value, order._id);
+              };
+              return (
+                <TableRow className={classes.tableRow} key={order.id}>
+                  <TableCell className>{order.user.email}</TableCell>
+                  <TableCell>{order.products.length}</TableCell>
+                  <TableCell>
+                    {moment(order.orderedOn).format("DD/MM/YYYY")}
+                  </TableCell>
+                  <TableCell>
+                    <FormControl className={classes.formControl}>
+                      <Select value={order.status} onChange={handleChange}>
+                        <MenuItem value="pending">Pending</MenuItem>
+                        <MenuItem value="ordered">Ordered</MenuItem>
+                        <MenuItem value="shipped">Shipped</MenuItem>
+                        <MenuItem value="completed">Completed</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </TableCell>
+                  <TableCell>{order.total}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
         <CardActions className={classes.actions}>

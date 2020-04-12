@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import OrdersTile from "../../components/Tile/OrdersTile";
+import { OrderShortList } from "../../components/Tile/";
 
 //Handles the state for the OrdersTile and all the network requests
 export default function OrdersTileContainer(props) {
   const { token } = props;
-  const [orders, setOrders] = useState("N/A");
+  const [orderList, setOrderList] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,11 +22,13 @@ export default function OrdersTileContainer(props) {
     fetch("http://localhost:80/v1/admin/orders", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        result.totalOrders ? setOrders(result.totalOrders) : setOrders(0);
+        result.totalOrders
+          ? setOrderList(result.orders.slice(0, 5))
+          : setOrderList([]);
         setLoading(false);
       })
       .catch((error) => console.log("error", error));
-  });
+  }, [token]);
 
-  return <OrdersTile products={orders} />;
+  return <OrderShortList orders={orderList} />;
 }

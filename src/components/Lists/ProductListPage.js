@@ -13,27 +13,29 @@ import {
   TableSortLabel,
   TableRow,
   Typography,
-  TablePagination
+  TablePagination,
+  Paper,
 } from "@material-ui/core";
 import moment from "moment";
+import { truncateString } from "../../util/textUtility";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
   content: {
-    padding: 0
+    padding: 0,
   },
   inner: {
-    minWidth: 1050
+    minWidth: 1050,
   },
   nameContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   actions: {
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
 
   visuallyHidden: {
@@ -45,8 +47,8 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
     position: "absolute",
     top: 20,
-    width: 1
-  }
+    width: 1,
+  },
 }));
 
 function descendingComparator(a, b, orderBy) {
@@ -72,7 +74,7 @@ function stableSort(array, comparator) {
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map(el => el[0]);
+  return stabilizedThis.map((el) => el[0]);
 }
 
 const headCells = [
@@ -81,23 +83,22 @@ const headCells = [
     id: "description",
     numeric: true,
     disablePadding: false,
-    label: "Description"
+    label: "Description",
   },
   { id: "price", numeric: true, disablePadding: false, label: "Price ($)" },
   { id: "stock", numeric: true, disablePadding: false, label: "Stock" },
-  { id: "sold", numeric: true, disablePadding: false, label: "Sold" }
 ];
 
 function EnhancedTableHead(props) {
   const { classes, order, orderBy, onRequestSort } = props;
-  const createSortHandler = property => event => {
+  const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   return (
     <TableHead>
       <TableRow>
-        {headCells.map(headCell => (
+        {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             sortDirection={orderBy === headCell.id ? order : false}
@@ -121,7 +122,7 @@ function EnhancedTableHead(props) {
   );
 }
 
-const UserList = props => {
+const UserList = (props) => {
   const classes = useStyles();
   const {
     products,
@@ -132,8 +133,10 @@ const UserList = props => {
     order,
     setOrder,
     orderBy,
-    setOrderBy
+    setOrderBy,
   } = props;
+
+  const emptyRows = rows - Math.min(rows, products.length - page * rows);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -144,7 +147,7 @@ const UserList = props => {
   return (
     <Card>
       <CardContent className={classes.content}>
-        <Table>
+        <Table style={{ width: "auto", tableLayout: "auto" }}>
           <EnhancedTableHead
             classes={classes}
             order={order}
@@ -154,15 +157,23 @@ const UserList = props => {
           <TableBody>
             {stableSort(products, getComparator(order, orderBy))
               .slice(rows * page, rows + rows * page)
-              .map(product => (
+              .map((product) => (
                 <TableRow hover className={classes.tableRow} key={product.id}>
                   <TableCell className>{product.name}</TableCell>
-                  <TableCell>{product.description}</TableCell>
+                  <TableCell>
+                    <Typography>
+                      {truncateString(product.description, 300)}
+                    </Typography>
+                  </TableCell>
                   <TableCell>{product.price}</TableCell>
                   <TableCell>{product.stock}</TableCell>
-                  <TableCell>{product.sold}</TableCell>
                 </TableRow>
               ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
         </Table>
         <CardActions className={classes.actions}>

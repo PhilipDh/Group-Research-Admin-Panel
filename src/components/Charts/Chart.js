@@ -6,7 +6,7 @@ import {
   XAxis,
   YAxis,
   Label,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from "recharts";
 import Title from "../Title";
 
@@ -24,23 +24,26 @@ const data = [
   createData("15:00", 20),
   createData("18:00", 24),
   createData("21:00", 24),
-  createData("24:00", undefined)
+  createData("24:00", undefined),
 ];
 
-export default function Chart() {
+export default function Chart(props) {
   const theme = useTheme();
+
+  const { orderData } = props;
+  console.log(orderData);
 
   return (
     <React.Fragment>
       <Title>Today</Title>
       <ResponsiveContainer>
         <LineChart
-          data={data}
+          data={orderData}
           margin={{
             top: 16,
             right: 16,
             bottom: 0,
-            left: 24
+            left: 24,
           }}
         >
           <XAxis dataKey="time" stroke={theme.palette.text.secondary} />

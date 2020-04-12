@@ -12,31 +12,31 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TablePagination
+  TablePagination,
 } from "@material-ui/core";
 import moment from "moment";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
   content: {
-    padding: 0
+    padding: 0,
   },
   inner: {
-    minWidth: 1050
+    minWidth: 1050,
   },
   nameContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   actions: {
-    justifyContent: "flex-end"
-  }
+    justifyContent: "flex-end",
+  },
 }));
 
-const UserList = props => {
+const UserList = (props) => {
   const classes = useStyles();
   const { users, page, rows, handlePageChange, handleRowsChange } = props;
   return (
@@ -47,21 +47,20 @@ const UserList = props => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Location</TableCell>
+              <TableCell>Phone Number</TableCell>
               <TableCell>Registration Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.slice(rows * page, rows + rows * page).map(user => (
+            {users.slice(rows * page, rows + rows * page).map((user) => (
               <TableRow hover className={classes.tableRow} key={user.id}>
-                <TableCell className>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  {user.address.city}, {user.address.state},{" "}
-                  {user.address.country}
+                <TableCell className>
+                  {user.firstName} {user.lastName}
                 </TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.phone}</TableCell>
                 <TableCell>
-                  {moment(user.createdAt).format("DD/MM/YYYY")}
+                  {moment(user.registeredOn).format("DD/MM/YYYY")}
                 </TableCell>
               </TableRow>
             ))}

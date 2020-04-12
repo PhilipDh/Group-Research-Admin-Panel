@@ -4,20 +4,20 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
-    width: "100%"
+    width: "100%",
   },
 
   icon: {
-    fontSize: 40
+    fontSize: 40,
   },
 
   subtitle: {
     fontSize: 12,
-    color: "#9e9e9e"
-  }
+    color: "#9e9e9e",
+  },
 }));
 
 export default function SoldTile(props) {
@@ -32,7 +32,7 @@ export default function SoldTile(props) {
         />
       </Grid>
       <Grid item xs={6}>
-        <Typography className={classes.subtitle}>Total Money made</Typography>
+        <Typography className={classes.subtitle}>Total Revenue</Typography>
         <Typography color="primary">${props.money}</Typography>
       </Grid>
     </Grid>

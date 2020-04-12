@@ -3,3 +3,4 @@ export { default as Dashboard } from "./Dashboard";
 export { default as OrdersList } from "./Orders";
 export { default as ProductsList } from "./Products";
 export { default as UsersList } from "./Users";
+export { default as Login } from "./LogIn";

@@ -7,3 +7,4 @@ export { default as SidebarList } from "./SidebarList";
 export { default as Deposits } from "./Deposits";
 export { default as OrdersShortList } from "./Orders";
 export { default as Searchbar } from "./SearchInput";
+export { default as Login } from "./LogIn";
