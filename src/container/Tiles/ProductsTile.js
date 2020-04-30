@@ -8,17 +8,20 @@ export default function ProductsTileContainer(props) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    //Headers for network request
     var myHeaders = new Headers();
     myHeaders.append("Authorization", token);
 
     var urlencoded = new URLSearchParams();
 
+    //Params for network request
     var requestOptions = {
       method: "GET",
       headers: myHeaders,
       redirect: "follow",
     };
 
+    //Network request to get amount of products
     fetch("http://localhost:80/v1/admin/products", requestOptions)
       .then((response) => response.json())
       .then((result) => {
@@ -28,7 +31,7 @@ export default function ProductsTileContainer(props) {
         setLoading(false);
       })
       .catch((error) => console.log("error", error));
-  });
+  }, [token]);
 
   return <ProductsTile products={products} />;
 }

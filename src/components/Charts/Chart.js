@@ -6,6 +6,7 @@ import {
   XAxis,
   YAxis,
   Label,
+  Tooltip,
   ResponsiveContainer,
 } from "recharts";
 import Title from "../Title";
@@ -46,6 +47,7 @@ export default function Chart(props) {
             left: 24,
           }}
         >
+          <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc" }} />
           <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
           <YAxis stroke={theme.palette.text.secondary}>
             <Label
@@ -60,7 +62,7 @@ export default function Chart(props) {
             type="monotone"
             dataKey="amount"
             stroke={theme.palette.primary.main}
-            dot={false}
+            dot={true}
           />
         </LineChart>
       </ResponsiveContainer>

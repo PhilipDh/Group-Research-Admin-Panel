@@ -9,7 +9,7 @@ import {
   Paper,
   Link,
 } from "@material-ui/core";
-import { Deposits, OrdersShortList } from "../../components";
+import { OrdersShortList } from "../../components";
 import {
   UsersTile,
   OrdersTile,

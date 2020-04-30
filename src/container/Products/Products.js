@@ -19,11 +19,13 @@ const ProductsListContainer = (props) => {
   const classes = useStyles();
   const { token } = props;
 
+  //Headers for the network request
   var myHeaders = new Headers();
   myHeaders.append("Authorization", token);
 
   var urlencoded = new URLSearchParams();
 
+  //Request parameters
   var requestOptions = {
     method: "GET",
     headers: myHeaders,
@@ -39,6 +41,7 @@ const ProductsListContainer = (props) => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    //Network request to get all products
     fetch("http://localhost:80/v1/admin/products", requestOptions)
       .then((response) => response.json())
       .then((result) => {

@@ -44,7 +44,7 @@ const LoginContainer = (props) => {
   //Hook equivalent of componendDIdMount, componentDidUpdate... Basically an async request that does not clog up the main thread
   useEffect(() => {
     const errors = validate(formState.values, format);
-
+    //Updates the login form error messages
     setFormState((formState) => ({
       ...formState,
       isValid: errors ? false : true,
@@ -52,9 +52,9 @@ const LoginContainer = (props) => {
     }));
   }, [formState.values]); //Executes everytime formState.values changes
 
+  //Gets called everytime one of the form input changes
   const handleChange = (event) => {
     event.persist();
-
     setFormState((formState) => ({
       ...formState, //values for errors and isValid
       values: {
@@ -92,9 +92,11 @@ const LoginContainer = (props) => {
       .catch((error) => console.log("error", error));
   };
 
+  //Checks wether a field in the form has an error
   const hasError = (field) =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
+  //Gets run on button click and performs a login request
   const handleSignIn = (event) => {
     event.preventDefault();
     startLogin(formState.values.email, formState.values.password);

@@ -53,12 +53,13 @@ const OrderListContainer = (props) => {
     myHeaders.append("Authorization", token);
     myHeaders.append("Accept", "application/json");
 
-    //var raw = '{\n	"order": "' + id + '",\n	"status": "' + value + '"\n}';
+    //Body for the PUT request
     var body = {
       order: id,
       status: value,
     };
 
+    //Params for the network request
     var requestOptions = {
       method: "PUT",
       headers: myHeaders,
@@ -66,28 +67,40 @@ const OrderListContainer = (props) => {
       redirect: "follow",
     };
 
+    //PUT network request to change order status
     fetch("http://localhost:80/v1/admin/order", requestOptions)
       .then((response) => response.text())
-      .then((result) => getAllOrders())
+      .then((result) => getAllOrders()) //Fetch updated results from backend
       .catch((error) => console.log("error", error));
   };
 
   const getAllOrders = async () => {
+    //Headers for network request
     var myHeaders = new Headers();
     myHeaders.append("Authorization", token);
 
     var urlencoded = new URLSearchParams();
 
+    //Params for network request
     var requestOptions = {
       method: "GET",
       headers: myHeaders,
       redirect: "follow",
     };
 
+    //Networ request to get all orders
     fetch("http://localhost:80/v1/admin/orders", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        result.orders ? setOrders(result.orders) : setOrders([]);
+        result.orders
+          ? setOrders(
+              result.orders.sort((a, b) => {
+                let aDate = new Date(a.orderedOn);
+                let bDate = new Date(b.orderedOn);
+                return aDate - bDate;
+              })
+            )
+          : setOrders([]);
         setLoading(false);
       })
       .catch((error) => console.log("error", error));

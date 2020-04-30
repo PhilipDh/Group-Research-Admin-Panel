@@ -12,9 +12,11 @@ function TodaysOrdersContainer(props) {
 
   //console.log((moment(Date.now()).endOf("day")).format("MM/DD/YYYY hh mm"));
 
-  var data = generateChartData(orderData.default);
+  //Prepares the orderdata to be read by the chart
+  //var data = generateChartData(orderData.default);
 
   useEffect(() => {
+    console.log("running effect");
     var myHeaders = new Headers();
     myHeaders.append("Authorization", token);
 

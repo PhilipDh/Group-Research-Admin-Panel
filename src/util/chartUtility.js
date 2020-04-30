@@ -1,29 +1,31 @@
 import moment from "moment";
-var placed = {
-  fromZero: 0,
-  fromThree: 0,
-  fromSix: 0,
-  fromNine: 0,
-  fromTwelve: 0,
-  fromFifteen: 0,
-  fromEighteen: 0,
-  fromTwentyOne: 0,
-};
 
 function createData(time, amount) {
   return { time, amount };
 }
 
 export const generateChartData = (data) => {
+  var placed = {
+    fromZero: 0,
+    fromThree: 0,
+    fromSix: 0,
+    fromNine: 0,
+    fromTwelve: 0,
+    fromFifteen: 0,
+    fromEighteen: 0,
+    fromTwentyOne: 0,
+  };
+
   var data = data.filter((order) =>
-    moment(order.createdAt).isBetween(
+    moment(order.orderedOn).isBetween(
       moment(Date.now()).startOf("day"),
       moment(Date.now()).endOf("day")
     )
   );
 
   for (let i = 0; i < data.length; i++) {
-    const element = data[i].createdAt;
+    const element = data[i].orderedOn;
+    console.log(element);
     if (
       moment(element).isBetween(
         moment(Date.now()).startOf("day"),

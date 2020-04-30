@@ -19,9 +19,7 @@ const browserHistory = createBrowserHistory();
 //Renders the Routes file
 //Themeprovider provides the general theme for the application with the Material UI guidelines
 function App() {
-  const [token, setToken] = useState(
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNWRhN2RkMTAyODc3MDAyMjQxYzczMiIsImlhdCI6MTU4NjY4NDMwNSwiZXhwIjoxNTg2Njg3OTA1fQ.Nivn3_mnhCNJsyf704EqtguVrLJdF27fFdkp_nPXUJo"
-  );
+  const [token, setToken] = useState(null);
 
   return (
     <ThemeProvider theme={theme}>

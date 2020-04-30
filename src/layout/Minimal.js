@@ -23,11 +23,7 @@ const Minimal = (props) => {
   return (
     <div className={classes.root}>
       <AppBar color="primary" position="fixed">
-        <Toolbar>
-          <RouterLink to="/">
-            <img alt="Logo" src="/images/logos/logo--white.svg" />
-          </RouterLink>
-        </Toolbar>
+        <Toolbar></Toolbar>
       </AppBar>
       <main className={classes.content}>{children}</main>
     </div>
